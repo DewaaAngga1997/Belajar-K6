@@ -1,7 +1,6 @@
 import execution from "k6/execution";
 import { loginUser } from "./helper/user.js";
 import { createContact } from "./helper/contact.js";
-import http from "k6/http";
 
 export const options = {
   // vus = Angka yang menentukan jumlah VU yang akan dijalankan secara bersamaan.
@@ -30,8 +29,9 @@ export function getToken() {
 
 // di sini kita akan melakukan setup data yang akan kita masukan
 export function setup() {
+  const totalContact = Number(__ENV.TOTAL_CONTACT) || 10;
   const data = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < totalContact; i++) {
     data.push({
       first_name: "kontak",
       last_name: `ke-${i}`,
